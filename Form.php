@@ -1,6 +1,6 @@
 <?php
-// form.php – Étudiant 1 : Collecte des données
-// Transmet les données POST vers index.php (intégration finale)
+// Page de saisie des avis visiteurs.
+// Envoie les données au traitement principal.
 require_once 'guestbook.class.php';
 
 $errors   = [];

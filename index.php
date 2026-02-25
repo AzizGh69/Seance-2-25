@@ -6,7 +6,7 @@ $errors   = [];
 $success  = false;
 $formData = [];
 
-// Handle form submission
+// Gère l'envoi du formulaire.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'submit') {
     $formData = [
         'nom'       => $_POST['nom']       ?? '',
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
-// Filters
+// Récupère les filtres depuis l'URL.
 $filters = [];
 if (isset($_GET['note']) && $_GET['note'] !== '') $filters['note'] = $_GET['note'];
 if (!empty($_GET['categorie'])) $filters['categorie'] = $_GET['categorie'];
@@ -312,7 +312,6 @@ function sentimentBadge(string $s): string {
 
 <div class="container">
 
-  <!-- Stats row -->
   <?php if ($stats['total'] > 0): ?>
   <div class="stats-row">
     <div class="stat-box"><div class="val"><?= $stats['total'] ?></div><div class="lbl">Avis collectés</div></div>
@@ -323,7 +322,6 @@ function sentimentBadge(string $s): string {
     <div class="stat-box"><div class="val"><?= $sentiments['négatif'] ?? 0 ?></div><div class="lbl">Avis négatifs</div></div>
   </div>
 
-  <!-- Note distribution -->
   <div class="card" style="margin-bottom:2rem">
     <div class="card-title">Répartition des notes</div>
     <div class="note-dist">
@@ -341,7 +339,6 @@ function sentimentBadge(string $s): string {
 
   <div class="grid-main">
 
-    <!-- ── FORM ── -->
     <div>
       <div class="card">
         <div class="card-title">Déposer un avis</div>
@@ -408,12 +405,10 @@ function sentimentBadge(string $s): string {
       </div>
     </div>
 
-    <!-- ── MESSAGES ── -->
     <div>
       <div class="card">
         <div class="card-title">Avis des visiteurs (<?= count($messages) ?>)</div>
 
-        <!-- Filters -->
         <form method="GET" action="">
           <div class="filter-row">
             <select name="note">
@@ -439,7 +434,6 @@ function sentimentBadge(string $s): string {
           </div>
         </form>
 
-        <!-- Messages -->
         <?php if (empty($messages)): ?>
         <p class="no-msg">Aucun avis ne correspond à vos critères.</p>
         <?php else: ?>
@@ -474,14 +468,14 @@ function sentimentBadge(string $s): string {
 </footer>
 
 <script>
-// Live char count
+// Met à jour le compteur de caractères en direct.
 const ta = document.getElementById('msgInput');
 const cn = document.getElementById('charNum');
 function updateCount() { cn.textContent = ta.value.length; }
 ta.addEventListener('input', updateCount);
 updateCount();
 
-// Client-side validation
+// Vérifie les champs avant l'envoi du formulaire.
 document.querySelector('form[method=POST]').addEventListener('submit', function(e) {
   const nom   = this.nom.value.trim();
   const email = this.email.value.trim();
